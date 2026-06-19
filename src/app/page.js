@@ -40,26 +40,30 @@ export default function Home() {
   // --- FUNGSI SUBMIT FORM ---
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setFormStatus("loading"); // Ubah tombol jadi "Sending..."
+    setFormStatus("loading");
 
     const form = e.target;
     const formData = new FormData(form);
 
     try {
-      await fetch("/", {
+      // 1. UBAH "/" MENJADI "/__forms.html"
+      const response = await fetch("/__forms.html", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams(formData).toString(),
       });
       
-      setFormStatus("success"); // Berhasil
-      form.reset(); // Kosongkan form
+      // 2. TAMBAHKAN PENGECEKAN INI AGAR ANIMASI JUJUR
+      if (!response.ok) {
+        throw new Error("Gagal mengirim pesan");
+      }
       
-      // Kembalikan ke tombol awal setelah 4 detik
+      setFormStatus("success");
+      form.reset();
       setTimeout(() => setFormStatus("idle"), 4000);
       
     } catch (error) {
-      setFormStatus("error"); // Gagal
+      setFormStatus("error");
       setTimeout(() => setFormStatus("idle"), 4000);
     }
   };
