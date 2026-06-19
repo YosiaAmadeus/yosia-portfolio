@@ -251,7 +251,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* --- CONTACT SECTION --- */}
+{/* --- CONTACT SECTION --- */}
         <section id="contact" className="mb-20 scroll-mt-32">
           {/* Kotak utama berwarna gelap dengan sudut sangat membulat */}
           <div className="bg-gray-900 text-white rounded-[3rem] p-8 md:p-16 lg:p-20 shadow-2xl">
@@ -272,26 +272,76 @@ export default function Home() {
                     <span className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center font-bold text-xl">@</span>
                     <span className="text-gray-300 font-medium text-lg">yosiaamadeus10@gmail.com</span>
                   </div>
-                  {/* Bisa ditambah link LinkedIn/GitHub nanti di sini */}
                 </div>
               </div>
 
               {/* Kolom Kanan: Form Kontak UI */}
               <div className="bg-white rounded-3xl p-6 md:p-8 text-gray-900 shadow-lg">
-                <form className="space-y-6">
+                <form 
+                  name="contact" 
+                  method="POST" 
+                  data-netlify="true" 
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    const form = e.target;
+                    const formData = new FormData(form);
+                    
+                    // Ubah status tombol jadi "Sending..."
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerText;
+                    submitBtn.innerText = "Sending...";
+                    submitBtn.disabled = true;
+                    submitBtn.classList.replace('bg-gray-900', 'bg-gray-500');
+
+                    try {
+                      await fetch("/", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                        body: new URLSearchParams(formData).toString(),
+                      });
+                      
+                      // Ubah status tombol jadi "Success"
+                      submitBtn.innerText = "Message Sent! ✅";
+                      submitBtn.classList.replace('bg-gray-500', 'bg-green-500');
+                      form.reset(); // Kosongkan isian form
+                      
+                      // Kembalikan tombol ke semula setelah 4 detik
+                      setTimeout(() => {
+                        submitBtn.innerText = originalText;
+                        submitBtn.disabled = false;
+                        submitBtn.classList.replace('bg-green-500', 'bg-gray-900');
+                      }, 4000);
+                      
+                    } catch (error) {
+                      alert("Oops! Something went wrong.");
+                      submitBtn.innerText = originalText;
+                      submitBtn.disabled = false;
+                      submitBtn.classList.replace('bg-gray-500', 'bg-gray-900');
+                    }
+                  }}
+                  className="space-y-6"
+                >
+                  {/* INPUT HIDDEN WAJIB UNTUK NETLIFY */}
+                  <input type="hidden" name="form-name" value="contact" />
+
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">Name</label>
-                    <input type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all" placeholder="Your name" />
+                    {/* Tambahkan attribute name="name" dan required */}
+                    <input type="text" name="name" required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all" placeholder="Your name" />
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">Email</label>
-                    <input type="email" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all" placeholder="your@email.com" />
+                    {/* Tambahkan attribute name="email" dan required */}
+                    <input type="email" name="email" required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all" placeholder="your@email.com" />
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">Message</label>
-                    <textarea rows="4" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all resize-none" placeholder="Tell me about your project..."></textarea>
+                    {/* Tambahkan attribute name="message" dan required */}
+                    <textarea rows="4" name="message" required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all resize-none" placeholder="Tell me about your project..."></textarea>
                   </div>
-                  <button type="button" className="w-full py-4 bg-gray-900 text-white rounded-xl font-bold hover:bg-gray-800 transition-all hover:shadow-lg hover:-translate-y-1">
+                  
+                  {/* Ubah type="button" menjadi type="submit" */}
+                  <button type="submit" className="w-full py-4 bg-gray-900 text-white rounded-xl font-bold hover:bg-gray-800 transition-all hover:shadow-lg hover:-translate-y-1 disabled:hover:translate-y-0 disabled:hover:shadow-none">
                     Send Message
                   </button>
                 </form>
