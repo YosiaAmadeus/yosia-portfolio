@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Footer from '../components/Footer';
   
-  const daftarKarya = [
+const daftarKarya = [
   {
     id: "cv-krama-samudra-berkat",
     judul: "Company Profile - CV Krama Samudra Berkat",
@@ -29,17 +29,46 @@ import Footer from '../components/Footer';
 
 export default function Home() {
 
+  // --- SEMUA STATE DIKUMPULKAN DI SINI (Level Teratas Komponen) ---
   const [filterAktif, setFilterAktif] = useState("All");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [formStatus, setFormStatus] = useState("idle"); // State baru untuk animasi form
+
   const daftarKategori = ["All", "Freelance Project", "Work Project"];
   const karyaDisaring = filterAktif === "All" ? daftarKarya : daftarKarya.filter((karya) => filterAktif === karya.kategori)
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  // --- FUNGSI SUBMIT FORM ---
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setFormStatus("loading"); // Ubah tombol jadi "Sending..."
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    try {
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData).toString(),
+      });
+      
+      setFormStatus("success"); // Berhasil
+      form.reset(); // Kosongkan form
+      
+      // Kembalikan ke tombol awal setelah 4 detik
+      setTimeout(() => setFormStatus("idle"), 4000);
+      
+    } catch (error) {
+      setFormStatus("error"); // Gagal
+      setTimeout(() => setFormStatus("idle"), 4000);
+    }
+  };
 
   return (
     <main className="min-h-screen bg-gray-50 text-gray-900 p-10 md:p-10">
       <div className="max-w-7xl mx-auto">
 
-{/* --- HEADER / NAVBAR --- */}
-       {/* --- HEADER / NAVBAR --- */}
+        {/* --- HEADER / NAVBAR --- */}
         <nav className="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-b-2 border-gray-200 transition-all">
           <div className="px-6 md:px-20">
             <div className="max-w-7xl mx-auto py-4 flex justify-between items-center relative">
@@ -79,7 +108,7 @@ export default function Home() {
           )}
         </nav>
 
-{/* --- HERO SECTION --- */}
+        {/* --- HERO SECTION --- */}
         <section className="relative min-h-screen flex items-center pt-32 lg:pt-20 pb-12">
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
@@ -87,7 +116,6 @@ export default function Home() {
             {/* Kolom Kiri: Teks, Tombol & Tech Stack */}
             <div className="text-center lg:text-left flex flex-col items-center lg:items-start">
               
-              {/* Teks dibesarkan menjadi text-5xl ke 7xl */}
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-4 leading-tight opacity-0 animate-fade-in-up">
                 Hi, I'm Yosia.
               </h1>
@@ -124,7 +152,6 @@ export default function Home() {
 
             {/* Kolom Kanan: Tempat Foto */}
             <div className="flex justify-center lg:justify-end mt-8 lg:mt-0 opacity-0 animate-fade-in-up delay-200">
-              {/* Bingkai foto dibesarkan sedikit menjadi lg:w-[28rem] lg:h-[28rem] */}
               <div className="relative w-72 h-72 md:w-80 md:h-80 lg:w-[28rem] lg:h-[28rem]">
                 <div className="absolute inset-0 bg-blue-100 rounded-full blur-3xl opacity-60"></div>
                 <div className="relative w-full h-full bg-gray-200 rounded-[2.5rem] shadow-xl overflow-hidden border-4 border-white flex items-center justify-center hover:scale-[1.02] transition-transform duration-500">
@@ -165,7 +192,7 @@ export default function Home() {
               
               <div className="space-y-8 border-l-2 border-gray-100 ml-3 pl-6">
                 
-                {/* Item Timeline 1: Freelance (Ongoing/Terbaru) */}
+                {/* Item Timeline 1 */}
                 <div className="relative">
                   <span className="absolute -left-[35px] top-1 w-4 h-4 bg-gray-900 rounded-full border-4 border-white"></span>
                   <h3 className="text-xl font-bold text-gray-900">Freelance Web Developer</h3>
@@ -175,7 +202,7 @@ export default function Home() {
                   </p>
                 </div>
 
-                {/* Item Timeline 2: PT GoVirtual */}
+                {/* Item Timeline 2 */}
                 <div className="relative">
                   <span className="absolute -left-[35px] top-1 w-4 h-4 bg-gray-900 rounded-full border-4 border-white"></span>
                   <h3 className="text-xl font-bold text-gray-900">Frontend Web Developer</h3>
@@ -185,7 +212,7 @@ export default function Home() {
                     </p>
                 </div>
 
-                {/* Item Timeline 3: MNC Land (Magang) */}
+                {/* Item Timeline 3 */}
                 <div className="relative">
                   <span className="absolute -left-[35px] top-1 w-4 h-4 bg-gray-900 rounded-full border-4 border-white"></span>
                   <h3 className="text-xl font-bold text-gray-900">IT Developer Intern</h3>
@@ -214,7 +241,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Tempat Menampilkan Kartu Karya dengan CSS Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {karyaDisaring.map((karya) => (
               <div key={karya.id} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 flex flex-col h-full">
@@ -229,7 +255,6 @@ export default function Home() {
                   </p>
                 </div>
                 
-                {/* Trigger Pindah Halaman diletakkan di sini */}
                 <div className="mb-6 mt-auto">
                   <Link href={`/projects/${karya.id}`} className="text-sm font-bold text-gray-900 hover:text-blue-600 transition-colors inline-flex items-center gap-1 group">
                     View Details 
@@ -251,13 +276,11 @@ export default function Home() {
           </div>
         </section>
 
-{/* --- CONTACT SECTION --- */}
+        {/* --- CONTACT SECTION --- */}
         <section id="contact" className="mb-20 scroll-mt-32">
-          {/* Kotak utama berwarna gelap dengan sudut sangat membulat */}
           <div className="bg-gray-900 text-white rounded-[3rem] p-8 md:p-16 lg:p-20 shadow-2xl">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-              {/* Kolom Kiri: Teks Ajakan */}
               <div className="text-center lg:text-left">
                 <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
                   Let's work together.
@@ -266,7 +289,6 @@ export default function Home() {
                   Whether you need to build a web application from scratch, require assistance managing domains and hosting for your business, or just want to connect, I'm always open to discussing new opportunities.
                 </p>
                 
-                {/* Info Kontak Langsung */}
                 <div className="flex flex-col items-center lg:items-start gap-6">
                   <div className="flex items-center gap-4">
                     <span className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center font-bold text-xl">@</span>
@@ -275,74 +297,43 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Kolom Kanan: Form Kontak UI */}
               <div className="bg-white rounded-3xl p-6 md:p-8 text-gray-900 shadow-lg">
                 <form 
                   name="contact" 
                   method="POST" 
                   data-netlify="true" 
-                  onSubmit={async (e) => {
-                    e.preventDefault();
-                    const form = e.target;
-                    const formData = new FormData(form);
-                    
-                    // Ubah status tombol jadi "Sending..."
-                    const submitBtn = form.querySelector('button[type="submit"]');
-                    const originalText = submitBtn.innerText;
-                    submitBtn.innerText = "Sending...";
-                    submitBtn.disabled = true;
-                    submitBtn.classList.replace('bg-gray-900', 'bg-gray-500');
-
-                    try {
-                      await fetch("/", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                        body: new URLSearchParams(formData).toString(),
-                      });
-                      
-                      // Ubah status tombol jadi "Success"
-                      submitBtn.innerText = "Message Sent! ✅";
-                      submitBtn.classList.replace('bg-gray-500', 'bg-green-500');
-                      form.reset(); // Kosongkan isian form
-                      
-                      // Kembalikan tombol ke semula setelah 4 detik
-                      setTimeout(() => {
-                        submitBtn.innerText = originalText;
-                        submitBtn.disabled = false;
-                        submitBtn.classList.replace('bg-green-500', 'bg-gray-900');
-                      }, 4000);
-                      
-                    } catch (error) {
-                      alert("Oops! Something went wrong.");
-                      submitBtn.innerText = originalText;
-                      submitBtn.disabled = false;
-                      submitBtn.classList.replace('bg-gray-500', 'bg-gray-900');
-                    }
-                  }}
+                  onSubmit={handleFormSubmit}
                   className="space-y-6"
                 >
-                  {/* INPUT HIDDEN WAJIB UNTUK NETLIFY */}
                   <input type="hidden" name="form-name" value="contact" />
 
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">Name</label>
-                    {/* Tambahkan attribute name="name" dan required */}
                     <input type="text" name="name" required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all" placeholder="Your name" />
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">Email</label>
-                    {/* Tambahkan attribute name="email" dan required */}
                     <input type="email" name="email" required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all" placeholder="your@email.com" />
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-gray-700 mb-2">Message</label>
-                    {/* Tambahkan attribute name="message" dan required */}
                     <textarea rows="4" name="message" required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all resize-none" placeholder="Tell me about your project..."></textarea>
                   </div>
                   
-                  {/* Ubah type="button" menjadi type="submit" */}
-                  <button type="submit" className="w-full py-4 bg-gray-900 text-white rounded-xl font-bold hover:bg-gray-800 transition-all hover:shadow-lg hover:-translate-y-1 disabled:hover:translate-y-0 disabled:hover:shadow-none">
-                    Send Message
+                  <button 
+                    type="submit" 
+                    disabled={formStatus === "loading"}
+                    className={`w-full py-4 text-white rounded-xl font-bold transition-all ${
+                      formStatus === "loading" ? "bg-gray-500 cursor-not-allowed" : 
+                      formStatus === "success" ? "bg-green-500" : 
+                      formStatus === "error" ? "bg-red-500" :
+                      "bg-gray-900 hover:bg-gray-800 hover:shadow-lg hover:-translate-y-1"
+                    }`}
+                  >
+                    {formStatus === "loading" ? "Sending..." : 
+                     formStatus === "success" ? "Message Sent! ✅" : 
+                     formStatus === "error" ? "Oops! Try Again." : 
+                     "Send Message"}
                   </button>
                 </form>
               </div>
