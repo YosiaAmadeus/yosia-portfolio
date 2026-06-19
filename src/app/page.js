@@ -233,7 +233,7 @@ export default function Home() {
         </section>
         
         {/* --- PORTFOLIO SECTION --- */}
-        <section id="portofolio" className="mb-32 scroll-mt-32">
+        <section id="portofolio" className="mb-32 scroll-mt-24">
           <header className="mb-12">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Featured Projects</h1>
             <p className="mt-4 text-gray-500 text-lg">A collection of my recent work and professional explorations.</p>
@@ -281,53 +281,58 @@ export default function Home() {
         </section>
 
         {/* --- CONTACT SECTION --- */}
-        <section id="contact" className="mb-20 scroll-mt-32">
-          <div className="bg-gray-900 text-white rounded-[3rem] p-8 md:p-16 lg:p-20 shadow-2xl">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <section id="contact" className="mb-20 scroll-mt-24">
+          {/* Ditambahkan max-w-6xl mx-auto agar kotak tidak merentang ke seluruh layar */}
+          <div className="bg-gray-900 text-white rounded-[2.5rem] p-8 md:p-10 lg:p-12 shadow-2xl max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
 
+              {/* Kolom Kiri: Teks Ajakan */}
               <div className="text-center lg:text-left">
-                <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight mb-4">
                   Let's work together.
                 </h2>
-                <p className="text-gray-400 text-lg mb-10 leading-relaxed max-w-md mx-auto lg:mx-0">
+                <p className="text-gray-400 text-base lg:text-lg mb-8 leading-relaxed max-w-md mx-auto lg:mx-0">
                   Whether you need to build a web application from scratch, require assistance managing domains and hosting for your business, or just want to connect, I'm always open to discussing new opportunities.
                 </p>
                 
+                {/* Info Kontak Langsung */}
                 <div className="flex flex-col items-center lg:items-start gap-6">
                   <div className="flex items-center gap-4">
-                    <span className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center font-bold text-xl">@</span>
-                    <span className="text-gray-300 font-medium text-lg">yosiaamadeus10@gmail.com</span>
+                    <span className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center font-bold text-lg">@</span>
+                    <span className="text-gray-300 font-medium text-base lg:text-lg">yosiaamadeus10@gmail.com</span>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white rounded-3xl p-6 md:p-8 text-gray-900 shadow-lg">
+              {/* Kolom Kanan: Form Kontak UI */}
+              <div className="bg-white rounded-2xl p-6 md:p-8 text-gray-900 shadow-lg">
                 <form 
                   name="contact" 
                   method="POST" 
                   data-netlify="true" 
                   onSubmit={handleFormSubmit}
-                  className="space-y-6"
+                  className="space-y-5"
                 >
                   <input type="hidden" name="form-name" value="contact" />
 
                   <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-2">Name</label>
-                    <input type="text" name="name" required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all" placeholder="Your name" />
+                    <label className="block text-sm font-bold text-gray-700 mb-1">Name</label>
+                    <input type="text" name="name" required className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all" placeholder="Your name" />
                   </div>
                   <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-2">Email</label>
-                    <input type="email" name="email" required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all" placeholder="your@email.com" />
+                    <label className="block text-sm font-bold text-gray-700 mb-1">Email</label>
+                    <input type="email" name="email" required className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all" placeholder="your@email.com" />
                   </div>
                   <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-2">Message</label>
-                    <textarea rows="4" name="message" required className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all resize-none" placeholder="Tell me about your project..."></textarea>
+                    <label className="block text-sm font-bold text-gray-700 mb-1">Message</label>
+                    {/* Rows diturunkan jadi 3 agar form lebih pendek */}
+                    <textarea rows="3" name="message" required className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all resize-none" placeholder="Tell me about your project..."></textarea>
                   </div>
                   
                   <button 
                     type="submit" 
                     disabled={formStatus === "loading"}
-                    className={`w-full py-4 text-white rounded-xl font-bold transition-all ${
+                    className={`w-full py-3.5 text-white rounded-xl font-bold transition-all ${
                       formStatus === "loading" ? "bg-gray-500 cursor-not-allowed" : 
                       formStatus === "success" ? "bg-green-500" : 
                       formStatus === "error" ? "bg-red-500" :
@@ -345,7 +350,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
         {/* --- FOOTER --- */}
         <Footer />
 
