@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Personal Web Portfolio - Yosia Amadeus
 
-## Getting Started
+Welcome to my personal portfolio website repository! This project serves as a digital showcase of my journey as a web developer, highlighting my freelance works, technical skills, and specialized projects.
 
-First, run the development server:
+🚀 **Live Preview:** https://yosia-portfolio.netlify.app
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 💻 Tech Stack & Tools
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Inside this project, I utilize modern web technologies to ensure optimal performance, clean code, and fast rendering:
+- **Framework:** Next.js (React)
+- **Styling:** Tailwind CSS
+- **Deployment & Hosting:** Netlify
+- **Design & Assets:** Lightshot, Snipping Tool, & shots.so (Mockup Generator)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## ✨ Key Features & Design Highlights
 
-To learn more about Next.js, take a look at the following resources:
+- **Pixel-Perfect Responsive Layout:** Fully optimized for all screen sizes, from ultra-wide desktops to modern smartphones.
+- **Rich Media Showcase:** Integrated high-performance video demos (~5MB optimized) and multi-device mockups to tell the story behind each project.
+- **Interactive Elements:** Features custom UI enhancements, dynamic navigation, and seamless component structures.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📂 Highlighted Projects Inside
 
-## Deploy on Vercel
+### 1. Web Freelance Platform
+A professional web solution designed for B2B client management. It showcases responsive desktop heroes, clean sections, and integrated contact flows.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 2. Jakarta Virtual Tour
+An immersive 360-degree digital experience exploration. Features high-definition interactive panoramas, webframe information panels, and a smooth mobile navigation system.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 3. Semarang Virtual Tour
+A localized virtual exploration platform built with complex node-to-node mapping, rich UI interactions, and interactive hotspots.
+
+---
+
+## 🛠️ How to Run Locally
+
+If you wish to clone this repository and explore the codebase locally, follow these steps:
+
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/YosiaAmadeus/yosia-portfolio.git]
+2. **Navigate to the project directory:**
+    ```bash
+   cd web-portofolio
+3. **Install dependencies:**
+   ``` bash
+   npm install
+4. **Run the development server:**
+   ``` bash
+   npm run dev
+5. Open http://localhost:3000 with your browser to see the result.
+
+✉️ Let's Connect!
+I am always open to discussing new projects, freelance opportunities, or web development ideas. Feel free to reach out through my portfolio's contact section!
