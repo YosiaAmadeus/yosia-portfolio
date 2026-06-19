@@ -1,7 +1,0 @@
-[build]
-  publish = ".next"
-  command = "next build"
-
-# Baris di bawah ini yang akan memberitahu Netlify agar tidak memblokir form-mu
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
